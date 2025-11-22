@@ -1,4 +1,5 @@
-mem=require("emu/RAM")
+mem=require("emu/ram")
+api=require("emu/api")
 
 bit=require("bit")
 
