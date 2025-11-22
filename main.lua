@@ -20,14 +20,15 @@ function love.load()
     mem:init()
     for i=0,159 do
         for y=0,127 do
-            api:pset(i,y,bit.band(i,y))
+            api:pset(i,y,bit.bxor(i,y))
         end
     end
     scn=love.image.newImageData(sys.sw,sys.sh)
 end
 
 function love.update(dt)
-    mem:poke(love.math.random(0,0xffff),love.math.random(0,255))
+    --mem:poke(love.math.random(0,0xffff),love.math.random(0,255))
+    --api:cls(math.random(0,15))
 end
 
 function love.draw()
@@ -51,7 +52,7 @@ function love.draw()
         end
     end]]
     lg.draw(d,0,0,0,3,3)
-    lg.print(love.timer.getFPS(),0,200)
+    --lg.print(love.timer.getFPS(),0,200)
 end
 
 function love.keypressed(k)
