@@ -11,6 +11,7 @@ shove.setWindowMode(800, 600, {resizable = true})
 
 mem=require("emu/ram")
 api=require("emu/api")
+sound=require("emu/sound")
 
 pal=require("lib/pal")
 
@@ -20,6 +21,8 @@ pal:load("pal")
 bit=require("bit")
 
 function love.load()
+    tmr=0
+    count=1
     shove.createLayer("screen")
     lg.setDefaultFilter("nearest")
     mem:init()
@@ -30,10 +33,11 @@ function love.load()
         end
     end
     scn=love.image.newImageData(sys.sw,sys.sh)
+    sound:init()
 end
 
 function love.update(dt)
-    --api:cls(math.random(0,15))
+
 end
 
 function love.draw()
@@ -56,6 +60,14 @@ function love.keypressed(k)
         else
             love.window.setFullscreen(true)
         end
+    end
+    if k=="p" then
+        local s=love.audio.newSource(sound:get(1,16,0.25))
+        s:play()
+    end
+    if k=="o" then
+        local s=love.audio.newSource(sound:get(8,16,0.25))
+        s:play()
     end
 end
 
