@@ -6,6 +6,7 @@ function mem:init()
     for i=1,self.size+1 do
         self.ram[i]=0
     end
+    print("created RAM with "..#self.ram.." bytes")
 end
 
 function mem:poke(addr,val)
