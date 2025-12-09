@@ -1,5 +1,10 @@
 local mem={}
 
+mem.map={
+    screenStart=0x0000, screenEnd=0x4800
+}
+
+
 function mem:init()
     self.size=0xFFFF
     self.ram={}

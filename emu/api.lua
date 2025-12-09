@@ -11,7 +11,7 @@ function decomp(val)
 end
 
 function api:pget(x, y)
-    local ind = math.floor((y * sys.sw + x) / 2)
+    local ind = mem.map.screenStart+math.floor((y * sys.sw + x) / 2)
     local hi, lo = decomp(mem:peek(ind))
     if x % 2 == 0 then
         return hi
@@ -22,7 +22,7 @@ end
 
 function api:pset(x, y, c)
     if x>=0 and x<sys.sw and y>=0 and y<sys.sh then
-        local ind = math.floor((y * sys.sw + x) / 2)
+        local ind = mem.map.screenStart+math.floor((y * sys.sw + x) / 2)
         local hi, lo = decomp(mem:peek(ind))
 
         if x % 2 == 0 then

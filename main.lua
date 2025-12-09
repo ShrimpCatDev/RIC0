@@ -34,10 +34,20 @@ function love.load()
     end
     scn=love.image.newImageData(sys.sw,sys.sh)
     sound:init()
+    for i=0,2048 do
+        mem:poke(math.random(0,0xffff),math.random(0,255))
+    end
+    print(sys.sw*sys.sh)
+
+    accm=0
 end
 
 function love.update(dt)
+    accm=accm+dt
 
+    if accm>=1/60 then
+        
+    end
 end
 
 function love.draw()
@@ -61,12 +71,16 @@ function love.keypressed(k)
             love.window.setFullscreen(true)
         end
     end
-    if k=="p" then
+    if k=="i" then
         local s=love.audio.newSource(sound:get(1,16,0.25))
         s:play()
     end
     if k=="o" then
-        local s=love.audio.newSource(sound:get(8,16,0.25))
+        local s=love.audio.newSource(sound:get(3,16,0.25))
+        s:play()
+    end
+    if k=="p" then
+        local s=love.audio.newSource(sound:get(5,16,0.25))
         s:play()
     end
 end
