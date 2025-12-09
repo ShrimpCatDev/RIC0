@@ -9,6 +9,7 @@ sys={
 shove.setResolution(sys.sw,sys.sh,{fitMethod="pixel",scalingFilter = "nearest",renderMode="layer"})
 shove.setWindowMode(800, 600, {resizable = true})
 
+cpu=require("emu/cpu")
 mem=require("emu/ram")
 api=require("emu/api")
 sound=require("emu/sound")
@@ -25,39 +26,33 @@ function love.load()
     count=1
     shove.createLayer("screen")
     lg.setDefaultFilter("nearest")
+
+    cpu:init()
     mem:init()
+
     for x=0,sys.sw-1 do
         for y=0,sys.sh-1 do
             --api:pset(i,y,bit.band(i,y))
             api:rectfill(x*8,y*8,8,8,x+y)
         end
     end
-    scn=love.image.newImageData(sys.sw,sys.sh)
-    sound:init()
-    for i=0,2048 do
-        mem:poke(math.random(0,0xffff),math.random(0,255))
-    end
-    print(sys.sw*sys.sh)
 
-    accm=0
+    vram=love.image.newImageData(sys.sw,sys.sh)
+    sound:init()
 end
 
 function love.update(dt)
-    accm=accm+dt
-
-    if accm>=1/60 then
-        
-    end
+    cpu:tick(dt)
 end
 
 function love.draw()
-    scn:mapPixel(function(x,y,r,g,b,a)
+    vram:mapPixel(function(x,y,r,g,b,a)
         return pal:color(api:pget(x,y))
     end)
 
     shove.beginDraw()
         shove.beginLayer("screen")
-            local d=lg.newImage(scn)
+            local d=lg.newImage(vram)
             lg.draw(d)
         shove.endLayer()
     shove.endDraw()
