@@ -13,6 +13,7 @@ cpu=require("emu/cpu")
 mem=require("emu/ram")
 api=require("emu/api")
 sound=require("emu/sound")
+sandbox=require("emu/sandbox")
 
 pal=require("lib/pal")
 
@@ -21,21 +22,26 @@ pal:load("pal")
 
 bit=require("bit")
 
+local c=[[
+
+    function _load()
+        print("hello")
+    end
+
+    function _tick()
+
+    end
+]]
+
 function love.load()
     tmr=0
     count=1
     shove.createLayer("screen")
     lg.setDefaultFilter("nearest")
 
-    cpu:init()
+    sandbox:init()
     mem:init()
-
-    for x=0,sys.sw-1 do
-        for y=0,sys.sh-1 do
-            --api:pset(i,y,bit.band(i,y))
-            api:rectfill(x*8,y*8,8,8,x+y)
-        end
-    end
+    cpu:init(c)
 
     vram=love.image.newImageData(sys.sw,sys.sh)
     sound:init()
