@@ -10,9 +10,9 @@ function decomp(val)
     return a,b
 end
 
-function api:pget(x, y)
+function api.pget(x, y)
     local ind = mem.map.screenStart+math.floor((y * sys.sw + x) / 2)
-    local hi, lo = decomp(mem:peek(ind))
+    local hi, lo = decomp(mem.peek(ind))
     if x % 2 == 0 then
         return hi
     else
@@ -20,10 +20,10 @@ function api:pget(x, y)
     end
 end
 
-function api:pset(x, y, c)
+function api.pset(x, y, c)
     if x>=0 and x<sys.sw and y>=0 and y<sys.sh then
         local ind = mem.map.screenStart+math.floor((y * sys.sw + x) / 2)
-        local hi, lo = decomp(mem:peek(ind))
+        local hi, lo = decomp(mem.peek(ind))
 
         if x % 2 == 0 then
             hi = bit.band(c, 0xF)
@@ -31,22 +31,22 @@ function api:pset(x, y, c)
             lo = bit.band(c, 0xF)
         end
 
-        mem:poke(ind, comp(hi, lo))
+        mem.poke(ind, comp(hi, lo))
     end
 end
 
-function api:cls(c)
+function api.cls(c)
     for x=0,sys.sw-1 do
         for y=0,sys.sh-1 do
-            self:pset(x,y,c)
+            api.pset(x,y,c)
         end
     end
 end
 
-function api:rectfill(x1,y1,w,h,c)
+function api.rectfill(x1,y1,w,h,c)
     for x=x1,x1+w do
         for y=y1,y1+h do
-            self:pset(x,y,c)
+            api.pset(x,y,c)
         end
     end
 end

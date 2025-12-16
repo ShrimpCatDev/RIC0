@@ -28,7 +28,7 @@ function sandbox:loadCart(code)
 
     setfenv(func,self.env)
     func()
-    
+
     if self.env._load then self.env._load() end
 end
 

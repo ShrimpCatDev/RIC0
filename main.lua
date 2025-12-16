@@ -26,10 +26,11 @@ local c=[[
 
     function _load()
         print("hello")
+        cls(4)
     end
 
     function _tick()
-
+        rectfill(8,8,16,16,5)
     end
 ]]
 
@@ -39,8 +40,8 @@ function love.load()
     shove.createLayer("screen")
     lg.setDefaultFilter("nearest")
 
+    mem.init()
     sandbox:init()
-    mem:init()
     cpu:init(c)
 
     vram=love.image.newImageData(sys.sw,sys.sh)
@@ -53,7 +54,7 @@ end
 
 function love.draw()
     vram:mapPixel(function(x,y,r,g,b,a)
-        return pal:color(api:pget(x,y))
+        return pal:color(api.pget(x,y))
     end)
 
     shove.beginDraw()

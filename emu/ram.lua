@@ -5,27 +5,27 @@ mem.map={
 }
 
 
-function mem:init()
-    self.size=0xFFFF
-    self.ram={}
-    for i=1,self.size+1 do
-        self.ram[i]=0
+function mem.init()
+    mem.size=0xFFFF
+    mem.ram={}
+    for i=1,mem.size+1 do
+        mem.ram[i]=0
     end
-    print("created RAM with "..#self.ram.." bytes")
+    print("created RAM with "..#mem.ram.." bytes")
 end
 
-function mem:poke(addr,val)
-    if addr+1>#self.ram or addr<0 or type(val)~="number" then
+function mem.poke(addr,val)
+    if addr+1>#mem.ram or addr<0 or type(val)~="number" then
         return 0
     end
-    self.ram[addr+1] = bit.band((val or 0),0xFF)
+    mem.ram[addr+1] = bit.band((val or 0),0xFF)
 end
 
-function mem:peek(addr)
-    if addr+1>#self.ram or addr<0 then
+function mem.peek(addr)
+    if addr+1>#mem.ram or addr<0 then
         return 0
     end
-    return self.ram[addr+1]
+    return mem.ram[addr+1]
 end
 
 return mem
