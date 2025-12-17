@@ -26,11 +26,12 @@ local c=[[
 
     function _load()
         print("hello")
-        cls(4)
+        
     end
 
     function _tick()
-        rectfill(8,8,16,16,5)
+        cls(4)
+        rectfill(24+math.floor(math.cos(t()/16)*16),8,16,16,5)
     end
 ]]
 

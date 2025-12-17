@@ -51,7 +51,9 @@ function api.rectfill(x1,y1,w,h,c)
     end
 end
 
-
+function api.time()
+    return cpu.time
+end
 
 
 return api

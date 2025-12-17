@@ -4,12 +4,14 @@ function sandbox:init()
     self.env={
         poke=mem.poke,
         peek=mem.peek,
+        t=api.time, time=api.time,
 
         pset=api.pset,
         pget=api.pget,
         cls=api.cls,
         rectfill=api.rectfill,
-        print=print
+        print=print,
+        math=math
     }
 end
 
