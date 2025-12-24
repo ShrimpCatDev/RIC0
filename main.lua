@@ -14,6 +14,7 @@ mem=require("emu/ram")
 api=require("emu/api")
 sound=require("emu/sound")
 sandbox=require("emu/sandbox")
+font=require("emu/font")
 
 pal=require("lib/pal")
 
@@ -44,6 +45,8 @@ function love.load()
     mem.init()
     sandbox:init()
     cpu:init(c)
+    font.init()
+    font.new("emu/data/font.png","default",6,8,[===[ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~]===])
 
     vram=love.image.newImageData(sys.sw,sys.sh)
     sound:init()
@@ -51,6 +54,7 @@ end
 
 function love.update(dt)
     cpu:tick(dt)
+    font.drawChar("A",0,0,12,"default")
 end
 
 function love.draw()
