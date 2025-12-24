@@ -13,7 +13,10 @@ function sandbox:init()
         cls=api.cls,
         rectfill=api.rectfill,
         print=api.print,
-        math=math
+        math=math,
+        sset=api.sset,
+        sget=api.sget,
+        sspr=api.sspr
     }
 end
 

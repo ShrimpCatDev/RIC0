@@ -35,6 +35,39 @@ function api.pset(x, y, c)
     end
 end
 
+function api.sset(x, y, c)
+    if x>=0 and x<128 and y>=0 and y<128 then
+        local ind = mem.map.spriteStart+math.floor((y * 128 + x) / 2)
+        local hi, lo = decomp(mem.peek(ind))
+
+        if x % 2 == 0 then
+            hi = bit.band(c, 0xF)
+        else
+            lo = bit.band(c, 0xF)
+        end
+
+        mem.poke(ind, comp(hi, lo))
+    end
+end
+
+function api.sget(x, y)
+    local ind = mem.map.spriteStart+math.floor((y * 128 + x) / 2)
+    local hi, lo = decomp(mem.peek(ind))
+    if x % 2 == 0 then
+        return hi
+    else
+        return lo
+    end
+end
+
+function api.sspr(sx,sy,sw,sh,dx,dy,dw,dh)
+    for x=sx,sx+sw do
+        for y=sy,sy+sh do
+            api.rectfill(x*dw,y*dh,dw,dh,api.sget(x,y))
+        end
+    end
+end
+
 function api.cls(c)
     for x=0,sys.sw-1 do
         for y=0,sys.sh-1 do

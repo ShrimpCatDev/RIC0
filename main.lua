@@ -24,41 +24,17 @@ pal:load("pal")
 bit=require("bit")
 
 local c=[[
-
-    function _load()
-        print("hello")
-        snow={}
-        for i=0,50 do
-            table.insert(snow,{x=math.random(0,143),y=math.random(0,127),spd=math.random(1,2)})
+function _load()
+    for x=0,7 do
+        for y=0,7 do
+            sset(x,y,x+y)
         end
     end
+end
 
-    function _tick()
-        cls(15)
-
-        rectfill(0,80,144,144,13)
-        rectfill(0,70,144,8,13)
-        rectfill(0,60,144,4,13)
-        rectfill(0,50,144,1,13)
-
-        for k,v in ipairs(snow) do
-            v.y=v.y+v.spd
-            v.y=v.y%144
-            pset(v.x,v.y,3)
-        end
-
-        print("Merry \12Christmas",1,1,3)
-        print("from BitSoda!",1,9,3)
-
-        local x,y=2,128-34
-        rectfill(x-1,y-1,34,34,0)
-        for i=0,15 do
-            rectfill((i%4)*8+x,math.floor(i/4)*8+y,8,8,i)
-        end
-        print("64 KiB RAM",x+34,y,3)
-        print("16 colors",x+34,y+9,3)
-        print("144x128 screen",x+34,y+9+9,3)
-    end
+function _tick()
+    sspr(0,0,8,8,0,0,1,1)
+end
 ]]
 
 function love.load()

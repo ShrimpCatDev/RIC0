@@ -1,7 +1,8 @@
 local mem={}
 
 mem.map={
-    screenStart=0x0000, screenEnd=0x4800
+    screenStart=0x0000, screenEnd=0x4800,
+    spriteStart=0x4801, spriteEnd=0x8801
 }
 
 
