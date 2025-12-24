@@ -30,8 +30,8 @@ local c=[[
     end
 
     function _tick()
-        cls(4)
-        rectfill(24+math.floor(math.cos(t()/16)*16),8,16,16,5)
+        cls(t()/16+1)
+        rectfill(8,8,16,16,t()/16)
     end
 ]]
 
@@ -74,7 +74,7 @@ function love.keypressed(k)
             love.window.setFullscreen(true)
         end
     end
-    if k=="i" then
+    --[[if k=="i" then
         local s=love.audio.newSource(sound:get(1,16,0.25))
         s:play()
     end
@@ -85,6 +85,6 @@ function love.keypressed(k)
     if k=="p" then
         local s=love.audio.newSource(sound:get(5,16,0.25))
         s:play()
-    end
+    end]]
 end
 
