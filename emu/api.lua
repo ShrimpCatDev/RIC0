@@ -44,8 +44,8 @@ function api.cls(c)
 end
 
 function api.rectfill(x1,y1,w,h,c)
-    for x=x1,x1+w do
-        for y=y1,y1+h do
+    for x=x1,x1+w-1 do
+        for y=y1,y1+h-1 do
             api.pset(x,y,c)
         end
     end
