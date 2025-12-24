@@ -33,6 +33,7 @@ local c=[[
     function _tick()
         cls(t()/16+1)
         rectfill(8,8,16,16,t()/16)
+        print("IS IT WORKING??",0,0,math.random(0,15))
     end
 ]]
 
@@ -54,7 +55,6 @@ end
 
 function love.update(dt)
     cpu:tick(dt)
-    font.drawChar("A",0,0,12,"default")
 end
 
 function love.draw()

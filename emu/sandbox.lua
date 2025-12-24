@@ -10,7 +10,7 @@ function sandbox:init()
         pget=api.pget,
         cls=api.cls,
         rectfill=api.rectfill,
-        print=print,
+        print=api.print,
         math=math
     }
 end

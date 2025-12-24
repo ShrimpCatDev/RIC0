@@ -55,5 +55,13 @@ function api.time()
     return cpu.time
 end
 
+function api.print(text,x,y,color)
+    if x and y and color then
+        font.print(text,x,y,color,"default")
+    else
+        print(text)
+    end
+end
+
 
 return api

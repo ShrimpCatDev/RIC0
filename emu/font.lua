@@ -20,7 +20,7 @@ function font.new(path,name,w,h,char)
         local sheetW = f.img:getWidth()
         local charX = (idx * w) % sheetW
         local charY = math.floor((idx * w) / sheetW) * h
-        
+
         for y = charY, charY + h - 1 do
             for x = charX, charX + w - 1 do
                 local r,g,b,a = f.img:getPixel(x,y)
@@ -37,8 +37,14 @@ function font.drawChar(t,x,y,c,name)
     for k,v in ipairs(char) do
         if v~=0 then
             api.pset(((k-1)%f.w)+x, math.floor((k-1)/f.w)+y, c)
-            print("draw")
         end
+    end
+end
+
+function font.print(text,x,y,color,name)
+    local f=font.fonts[name]
+    for i=1,string.len(text) do
+        font.drawChar(string.sub(text,i,i),(i-1)*f.w+x,y,color,name)
     end
 end
 
