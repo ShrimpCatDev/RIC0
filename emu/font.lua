@@ -42,9 +42,19 @@ function font.drawChar(t,x,y,c,name)
 end
 
 function font.print(text,x,y,color,name)
-    local f=font.fonts[name]
-    for i=1,string.len(text) do
-        font.drawChar(string.sub(text,i,i),(i-1)*f.w+x,y,color,name)
+    local f = font.fonts[name]
+    if not f then return end
+    local c = color
+    local dx = 0
+    for i = 1, #text do
+        local b = text:byte(i)
+        if b and b < 16 then
+            c = b
+        else
+            local ch = text:sub(i,i)
+            font.drawChar(ch, x + dx * f.w, y, c, name)
+            dx = dx + 1
+        end
     end
 end
 

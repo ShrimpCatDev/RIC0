@@ -47,7 +47,7 @@ local c=[[
             pset(v.x,v.y,3)
         end
 
-        print("Merry Christmas",1,1,3)
+        print("Merry \12Christmas",1,1,3)
         print("from BitSoda!",1,9,3)
 
         local x,y=2,128-34
