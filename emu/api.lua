@@ -61,11 +61,16 @@ function api.sget(x, y)
 end
 
 function api.sspr(sx,sy,sw,sh,dx,dy,dw,dh)
-    for x=sx,sx+sw do
-        for y=sy,sy+sh do
-            api.rectfill(x*dw,y*dh,dw,dh,api.sget(x,y))
+    for x=sx,sx+sw-1 do
+        for y=sy,sy+sh-1 do
+            api.rectfill(x*dw+dx-sx,y*dh+dy-sy,dw,dh,api.sget(x,y))
         end
     end
+end
+
+function api.spr(ind,x,y,w,h)
+    local sw,sh=w or 1, h or 1
+    api.sspr(math.floor((ind%16)*8),math.floor((ind/16)*8),8*sw,8*sh,math.floor(x),math.floor(y),1,1)
 end
 
 function api.cls(c)

@@ -23,19 +23,28 @@ pal:load("pal")
 
 bit=require("bit")
 
-local c=[[
+local c=[==[
 function _load()
-    for x=0,7 do
-        for y=0,7 do
+    for x=0,15 do
+        for y=0,15 do
             sset(x,y,x+y)
         end
     end
 end
 
 function _tick()
-    sspr(0,0,8,8,0,0,1,1)
+    cls(6)
+
+    for i=0,8 do
+        spr(0,math.cos(t()*0.1+i*6.28319/8)*16+144/2-4,math.sin(t()*0.1+i*6.28319/8)*32+128/2-4,1,1)
+    end
+    for i=0,8 do
+        spr(1,math.sin(t()*0.1+i*6.28319/8)*32+144/2-4,math.cos(t()*0.1+i*6.28319/8)*16+128/2-4,1,1)
+    end
+    print("the text \4OF \12COLOR\2!",1,2,2)
+    print("the text \8OF \13COLOR\3!",1,1,3)
 end
-]]
+]==]
 
 function love.load()
     tmr=0
