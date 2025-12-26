@@ -74,9 +74,10 @@ function api.spr(ind,x,y,w,h)
 end
 
 function api.cls(c)
+    local color=c or 0
     for x=0,sys.sw-1 do
         for y=0,sys.sh-1 do
-            api.pset(x,y,c)
+            api.pset(x,y,color)
         end
     end
 end
@@ -101,5 +102,18 @@ function api.print(text,x,y,color)
     end
 end
 
+--code not made my me, this isnt for anything importandt and ill redo this later
+function api.drawData(text, x, y, w, h)
+    local hex = tostring(text):gsub("^0x",""):gsub("%s+",""):gsub("[^%x]","")
+    local total = w * h
+
+    for i = 1, total do
+        local ch = hex:sub(i,i)
+        local col = ch ~= "" and (tonumber(ch,16) or 0) or 0
+        local px = (i - 1) % w
+        local py = math.floor((i - 1) / w)
+        api.pset(x + px, y + py, col)
+    end
+end
 
 return api
