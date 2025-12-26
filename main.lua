@@ -47,23 +47,30 @@ end
 ]==]
 
 function love.load()
+    gs=require("lib/hump/gamestate")
+    gs.registerEvents()
+
+    state={
+        run=require("run"),
+        console=require("console")
+    }
+
     tmr=0
     count=1
     shove.createLayer("screen")
     lg.setDefaultFilter("nearest")
 
-    mem.init()
-    sandbox:init()
-    cpu:init(c)
     font.init()
     font.new("emu/data/font.png","default",6,8,[===[ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~]===])
 
     vram=love.image.newImageData(sys.sw,sys.sh)
     sound:init()
+
+    gs.switch(state.console,c)
 end
 
 function love.update(dt)
-    cpu:tick(dt)
+    
 end
 
 function love.draw()

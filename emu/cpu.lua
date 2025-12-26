@@ -2,17 +2,17 @@ local cpu={}
 
 function cpu:init(code)
     sandbox:loadCart(code)
-    self.tickRate=60
+    self.tickRate=30
     self.acc=5
     self.time=0
 end
 
-function cpu:tick(dt)
+function cpu:tick(dt,runFunc)
     self.acc=self.acc+dt
 
     if self.acc>=1/self.tickRate then
         self.time=self.time+1
-        sandbox:tick()
+        runFunc()
         self.acc=0
     end
 end
