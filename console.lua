@@ -1,6 +1,7 @@
 local console={}
 
 function console:enter(prev,cart)
+    timer.clear()
     if mem then
         self.backup=mem.ram
     end
@@ -57,10 +58,31 @@ function split(str)
     return words
 end
 
+local function keys_of(t, sort_keys)
+  local ks = {}
+  for k,_ in pairs(t) do
+    if type(k) == "string" then table.insert(ks, k) print(k) end
+  end
+  if sort_keys then table.sort(ks) end
+  return ks
+end
+
+console.help={
+    
+}
+
 console.commands={
     ["help"]=function(args)
         out("\11-HELP-")
-        out("Help urself >:(")
+        if args[1] then
+
+        else
+            local key=keys_of(console.commands,true)
+            out("\14List of commands:")
+            for k,v in pairs(key) do
+                out(v)
+            end
+        end
     end,
     ["print"]=function(args)
         if #args>=1 then

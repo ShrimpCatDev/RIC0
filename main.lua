@@ -50,6 +50,7 @@ function love.load()
     love.window.setTitle("BitSoda")
     gs=require("lib/hump/gamestate")
     gs.registerEvents()
+    timer=require("lib/timer")
 
     data=require("data")
     state={
