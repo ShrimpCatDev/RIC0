@@ -50,6 +50,7 @@ function love.load()
     gs=require("lib/hump/gamestate")
     gs.registerEvents()
 
+    data=require("data")
     state={
         run=require("run"),
         console=require("console")

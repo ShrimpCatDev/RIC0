@@ -18,6 +18,9 @@ function console:enter(prev,cart)
     }
     self.input=""
     self.bg=0
+    self.egg={
+        cat={x=-8,y=sys.sh-8,go=false,img="0000000000050050005655650557777557570705577877855777775056777650"}
+    }
 end
 
 function console:update(dt)
@@ -33,6 +36,13 @@ function console:update(dt)
         end
         api.print("> "..self.input.."\8_",ox,ind*size+oy,3)
         --api.print("hello world",0,0,7)
+        if self.egg.cat.go then
+            self.egg.cat.x=self.egg.cat.x+1
+            api.drawData(self.egg.cat,self.egg.cat.x,self.egg.cat.y,8,8)
+            if self.egg.cat.x>sys.sw then
+                self.egg.cat.go=false
+            end
+        end
     end)
 end
 
@@ -66,6 +76,26 @@ console.commands={
     end,
     ["bg"]=function(args)
         console.bg=args[1] or 0
+    end,
+    ["new"]=function(args)
+        if args[1] then
+            if not love.filesystem.getInfo(args[1]..data.extension) then
+                love.filesystem.write(args[1]..data.extension,data.template)
+                out("\11new cart created")
+            else
+                out("\14File already exists!")
+            end
+        else
+            out("\14Syntax error!")
+        end
+    end,
+    ["folder"]=function(args)
+        local suc= love.system.openURL("file://"..love.filesystem.getSaveDirectory())
+        if suc then
+            out("\14opened data directory!")
+        else
+            out("\14an error occured :(")
+        end
     end
 }
 
