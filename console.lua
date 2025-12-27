@@ -104,7 +104,7 @@ console.commands={
             local key=keys_of(console.commands,true)
             out("\14List of commands:")
             for k,v in pairs(key) do
-                out(v)
+                out("- "..v)
             end
         end
     end,
