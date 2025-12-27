@@ -13,7 +13,8 @@ function console:enter(prev,cart)
         "-\6Bit\7Soda\3-",
         "",
         "A fantasy console by",
-        "\8S\9h\10r\11i\12m\13p\14C\15a\6t",
+        --"\8S\9h\10r\11i\12m\13p\14C\15a\6t",
+        "\16ShrimpCat",
         ""
     }
     self.input=""
@@ -25,6 +26,7 @@ end
 
 function console:update(dt)
     cpu:tick(dt,function()
+        font.time=font.time+1
         api.cls(self.bg)
         --api.drawData(self.logo,5,0,42,10)
         local ox,oy=1,1
@@ -96,10 +98,20 @@ console.commands={
         else
             out("\14an error occured :(")
         end
+    end,
+    ["shutdown"]=function()
+        love.event.quit()
+    end,
+    ["palette"]=function()
+        out("\0O\1O\2O\3O")
+        out("\4O\5O\6O\7O")
+        out("\8O\9O\10O\11O")
+        out("\12O\13O\14O\15O")
     end
 }
 
 function out(s)
+    print(s)
     table.insert(console.log,s)
 end
 

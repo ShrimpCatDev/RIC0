@@ -47,6 +47,7 @@ end
 ]==]
 
 function love.load()
+    love.window.setTitle("BitSoda")
     gs=require("lib/hump/gamestate")
     gs.registerEvents()
 
@@ -62,7 +63,7 @@ function love.load()
     lg.setDefaultFilter("nearest")
 
     font.init()
-    font.new("emu/data/font.png","default",6,8,[===[ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~]===])
+    font.new("emu/data/font.png","default",6,8,[===[ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|]===])
 
     vram=love.image.newImageData(sys.sw,sys.sh)
     sound:init()

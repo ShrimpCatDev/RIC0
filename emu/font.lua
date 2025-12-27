@@ -2,6 +2,7 @@ local font={}
 
 function font.init()
     font.fonts={}
+    font.time=32
 end
 
 function font.new(path,name,w,h,char)
@@ -50,9 +51,15 @@ function font.print(text,x,y,color,name)
         local b = text:byte(i)
         if b and b < 16 then
             c = b
+        elseif text:sub(i,i)=="\16" then
+            c=(font.time/2)
         else
             local ch = text:sub(i,i)
-            font.drawChar(ch, x + dx * f.w, y, c, name)
+            if c==(font.time/2) then
+                font.drawChar(ch, x + dx * f.w, y+math.floor(math.cos(font.time/4+i)*2), c+i, name)
+            else
+                font.drawChar(ch, x + dx * f.w, y, c, name)
+            end
             dx = dx + 1
         end
     end
