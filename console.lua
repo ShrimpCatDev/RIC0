@@ -27,6 +27,8 @@ function console:enter(prev,cart)
     self.time=0
 end
 
+local blink={" ","\8_"}
+
 function console:update(dt)
     cpu:tick(dt,function()
         self.time=self.time+1
@@ -42,11 +44,8 @@ function console:update(dt)
             ind=k
         end
 
-        if math.floor((self.time/8)%2)==0 then
-            api.print("> "..self.input.."\8_",ox,ind*size+oy+self.scroll.y,3)
-        else
-            api.print("> "..self.input.." ",ox,ind*size+oy+self.scroll.y,3)
-        end
+        api.print("> "..self.input..blink[math.floor((self.time/8)%#blink)+1],ox,ind*size+oy+self.scroll.y,3)
+            
         --api.print("hello world",0,0,7)
         if self.egg.cat.go then
             self.egg.cat.x=self.egg.cat.x+1

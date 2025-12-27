@@ -47,6 +47,7 @@ end
 ]==]
 
 function love.load()
+    love.mouse.setVisible(false)
     love.window.setTitle("BitSoda")
     gs=require("lib/hump/gamestate")
     gs.registerEvents()
