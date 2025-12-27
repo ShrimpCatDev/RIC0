@@ -23,10 +23,14 @@ function console:enter(prev,cart)
     self.egg={
         cat={x=-8,y=sys.sh-8,go=false,img="0000000000050050005655650557777557570705577877855777775056777650"}
     }
+    self.scroll={y=0,gy=0}
+    self.time=0
 end
 
 function console:update(dt)
     cpu:tick(dt,function()
+        self.time=self.time+1
+        timer.update(1/cpu.tickRate)
         font.time=font.time+1
         api.cls(self.bg)
         --api.drawData(self.logo,5,0,42,10)
@@ -34,10 +38,15 @@ function console:update(dt)
         local size=9
         local ind=0
         for k,v in ipairs(self.log) do
-            api.print(v,ox,(k-1)*size+oy,3)
+            api.print(v,ox,(k-1)*size+oy+self.scroll.y,3)
             ind=k
         end
-        api.print("> "..self.input.."\8_",ox,ind*size+oy,3)
+
+        if math.floor((self.time/8)%2)==0 then
+            api.print("> "..self.input.."\8_",ox,ind*size+oy+self.scroll.y,3)
+        else
+            api.print("> "..self.input.." ",ox,ind*size+oy+self.scroll.y,3)
+        end
         --api.print("hello world",0,0,7)
         if self.egg.cat.go then
             self.egg.cat.x=self.egg.cat.x+1
@@ -45,6 +54,18 @@ function console:update(dt)
             if self.egg.cat.x>sys.sw then
                 self.egg.cat.go=false
             end
+        end
+
+        --145
+
+        local s=(#self.log+1)*size+oy
+
+        if s>=145 and self.scroll.gy~=sys.sh-s then
+            self.scroll.gy=sys.sh-s
+            timer.tween(0.6,self.scroll,{y=self.scroll.gy},"out-elastic")
+        elseif s<=145-size and self.scroll.gy~=0 then
+            self.scroll.gy=0
+            timer.tween(0.6,self.scroll,{y=self.scroll.gy},"out-elastic")
         end
     end)
 end
@@ -68,14 +89,17 @@ local function keys_of(t, sort_keys)
 end
 
 console.help={
-    
+    ["help"]={"melp :3"},
+    ["print"]={""},
 }
 
 console.commands={
     ["help"]=function(args)
         out("\11-HELP-")
         if args[1] then
-
+            out("just \16figure out")
+            out("what you're supposed")
+            out("to do with "..args[1]..".")
         else
             local key=keys_of(console.commands,true)
             out("\14List of commands:")

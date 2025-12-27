@@ -56,9 +56,9 @@ function font.print(text,x,y,color,name)
         else
             local ch = text:sub(i,i)
             if c==(font.time/2) then
-                font.drawChar(ch, x + dx * f.w, y+math.floor(math.cos(font.time/4+i)*2), c+i, name)
+                font.drawChar(ch, math.floor(x + dx * f.w), math.floor(y)+math.floor(math.cos(font.time/4+i)*2), c+i, name)
             else
-                font.drawChar(ch, x + dx * f.w, y, c, name)
+                font.drawChar(ch, math.floor(x + dx * f.w), math.floor(y), c, name)
             end
             dx = dx + 1
         end
