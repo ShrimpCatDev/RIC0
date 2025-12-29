@@ -1,6 +1,20 @@
 local console={}
 
 function console:enter(prev,cart)
+    local file="carts"
+    local info=love.filesystem.getInfo(file)
+    if info and info.type=="directory" then
+        print("cart directory exists")
+    else
+        print("cart directory doesn't exist, making one now...")
+        ok = love.filesystem.createDirectory("carts")
+        if ok then
+            print("cart directory made!")
+        else
+            print("an error occured while making the cart directory")
+        end
+    end
+
     timer.clear()
     if mem then
         self.backup=mem.ram
@@ -134,8 +148,8 @@ console.commands={
     end,
     ["new"]=function(args)
         if args[1] then
-            if not love.filesystem.getInfo(args[1]..data.extension) then
-                love.filesystem.write(args[1]..data.extension,data.template)
+            if not love.filesystem.getInfo("carts/"..args[1]..data.extension) then
+                love.filesystem.write("carts/"..args[1]..data.extension,data.template)
                 out("\11new cart created")
             else
                 out("\14File already exists!")
@@ -162,18 +176,30 @@ console.commands={
         out("\12O\13O\14O\15O")
     end,
     ["ls"]=function(args)
-        local files=love.filesystem.getDirectoryItems("")
-        for i,v in ipairs(files) do
-            local file=v
-            local info=love.filesystem.getInfo(file)
-            if info then
-                if info.type=="file" then
-                    local name=file:match("^(.+)%"..data.extension.."$")
-                    if name then
-                        out(name)
+        local dir="carts"
+
+        if args[1] then
+            ok = love.filesystem.createDirectory("carts/"..args[1])
+            if ok then
+                out("\11new folder created")
+            else
+                out("\11an error occured!")
+            end
+        else
+            local files=love.filesystem.getDirectoryItems(dir)
+            table.sort(files)
+            for i,v in ipairs(files) do
+                local file=dir.."/"..v
+                local info=love.filesystem.getInfo(file)
+                if info then
+                    if info.type=="file" then
+                        local name=v:match("^(.+)%"..data.extension.."$")
+                        if name then
+                            out(name)
+                        end
+                    elseif info.type=="directory" then
+                        out("\15"..v)
                     end
-                elseif info.type=="directory" then
-                    out("\15"..file)
                 end
             end
         end
