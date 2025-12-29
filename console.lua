@@ -23,11 +23,15 @@ function console:enter(prev,cart)
     self.egg={
         cat={x=-8,y=sys.sh-8,go=false,img="0000000000050050005655650557777557570705577877855777775056777650"}
     }
-    self.scroll={y=0,gy=0}
+    self.scroll={y=0,gy=0,mouse=false}
     self.time=0
 end
 
 local blink={" ","\8_"}
+
+local function lerp(a, b, t)
+    return a + (b - a) * t
+end
 
 function console:update(dt)
     cpu:tick(dt,function()
@@ -59,12 +63,16 @@ function console:update(dt)
 
         local s=(#self.log+1)*size+oy
 
-        if s>=145 and self.scroll.gy~=sys.sh-s then
-            self.scroll.gy=sys.sh-s
-            timer.tween(0.6,self.scroll,{y=self.scroll.gy},"out-elastic")
-        elseif s<=145-size and self.scroll.gy~=0 then
-            self.scroll.gy=0
-            timer.tween(0.6,self.scroll,{y=self.scroll.gy},"out-elastic")
+        if not self.scroll.mouse then
+            if s>=145 and self.scroll.gy~=sys.sh-s then
+                self.scroll.gy=sys.sh-s
+                timer.tween(0.6,self.scroll,{y=self.scroll.gy},"out-elastic")
+            elseif s<=145-size and self.scroll.gy~=0 then
+                self.scroll.gy=0
+                timer.tween(0.6,self.scroll,{y=self.scroll.gy},"out-elastic")
+            end
+        else
+            self.scroll.y=lerp(self.scroll.y,self.scroll.gy,0.4)
         end
     end)
 end
@@ -152,6 +160,23 @@ console.commands={
         out("\4O\5O\6O\7O")
         out("\8O\9O\10O\11O")
         out("\12O\13O\14O\15O")
+    end,
+    ["ls"]=function(args)
+        local files=love.filesystem.getDirectoryItems("")
+        for i,v in ipairs(files) do
+            local file=v
+            local info=love.filesystem.getInfo(file)
+            if info then
+                if info.type=="file" then
+                    local name=file:match("^(.+)%"..data.extension.."$")
+                    if name then
+                        out(name)
+                    end
+                elseif info.type=="directory" then
+                    out("\15"..file)
+                end
+            end
+        end
     end
 }
 
@@ -176,6 +201,7 @@ end
 
 function console:textinput(k)
     self.input=self.input..k
+    self.scroll.mouse=false
 end
 
 function console:keypressed(k)
@@ -186,6 +212,17 @@ function console:keypressed(k)
         out("\1"..self.input)
         handleInput(self.input)
         self.input=""
+        self.scroll.mouse=false
+    end
+end
+
+function console:wheelmoved(x,y)
+    if y>0 and self.scroll.gy<0 then
+        self.scroll.mouse=true
+        self.scroll.gy=self.scroll.gy+9
+    elseif y<0 then
+        self.scroll.mouse=true
+        self.scroll.gy=self.scroll.gy-9
     end
 end
 
