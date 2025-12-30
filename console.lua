@@ -39,6 +39,7 @@ function console:enter(prev,cart)
     }
     self.scroll={y=0,gy=0,mouse=false}
     self.time=0
+    self.loaded=""
 end
 
 local blink={" ","\8_"}
@@ -113,6 +114,29 @@ console.help={
     ["help"]={"melp :3"},
     ["print"]={""},
 }
+
+tempCart=[==[
+function _load()
+    for x=0,15 do
+        for y=0,15 do
+            sset(x,y,x+y)
+        end
+    end
+end
+
+function _tick()
+    cls(6)
+
+    for i=0,8 do
+        spr(0,math.cos(t()*0.1+i*6.28319/8)*16+144/2-4,math.sin(t()*0.1+i*6.28319/8)*32+128/2-4,1,1)
+    end
+    for i=0,8 do
+        spr(1,math.sin(t()*0.1+i*6.28319/8)*32+144/2-4,math.cos(t()*0.1+i*6.28319/8)*16+128/2-4,1,1)
+    end
+    print("the text \4OF \12COLOR\2!",1,2,2)
+    print("the text \8OF \13COLOR\3!",1,1,3)
+end
+]==]
 
 console.commands={
     ["help"]=function(args)
@@ -198,11 +222,34 @@ console.commands={
                             out(name)
                         end
                     elseif info.type=="directory" then
-                        out("\15"..v)
+                        out("\15-"..v)
                     end
                 end
             end
         end
+    end,
+    ["load"]=function(args)
+        if args[1] then
+            local info=love.filesystem.getInfo("carts/"..args[1]..data.extension)
+            if info and info.type=="file" then
+                local txt,size=love.filesystem.read("carts/"..args[1]..data.extension)
+                if console.loaded then
+                    console.loaded=txt
+                    out("\16loaded!")
+                    out("\2("..size.." bytes)")
+                else
+                    out("\14an error occured :(")
+                end
+            else
+                out("\14Cart doesn't exist")
+            end
+        else
+            out("\14Syntax error!")
+            out("\13(include cart name)")
+        end
+    end,
+    ["run"]=function(args)
+        gs.switch(state.run,tempCart)
     end
 }
 
