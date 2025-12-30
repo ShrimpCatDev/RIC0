@@ -159,9 +159,6 @@ console.commands={
     ["cls"]=function(args)
         console.log={}
     end,
-    ["bg"]=function(args)
-        console.bg=args[1] or 0
-    end,
     ["new"]=function(args)
         if args[1] then
             if not love.filesystem.getInfo("carts/"..args[1]..data.extension) then
@@ -245,6 +242,9 @@ console.commands={
             local load=require("load")
             load.load(console.loaded)
         end
+    end,
+    ["exit"]=function()
+        love.event.quit()
     end
 }
 
