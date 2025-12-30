@@ -1,7 +1,9 @@
 local cpu={}
 
 function cpu:init(code)
-    sandbox:loadCart(code)
+    if code then
+        sandbox:loadCart(code)
+    end
     self.tickRate=60
     self.acc=5
     self.time=0

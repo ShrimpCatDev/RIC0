@@ -1,6 +1,6 @@
 local console={}
 
-function console:enter(prev,cart)
+function console:init()
     local file="carts"
     local info=love.filesystem.getInfo(file)
     if info and info.type=="directory" then
@@ -14,14 +14,9 @@ function console:enter(prev,cart)
             print("an error occured while making the cart directory")
         end
     end
-
-    timer.clear()
-    if mem then
-        self.backup=mem.ram
-    end
     mem.init()
     sandbox:init()
-    cpu:init(cart)
+    cpu:init()
 
     self.logo="33333000000000000333300000000000330000000033333303300330003333300333300000330033330033ee33033003300033eee1333333000033133333303311331ee133333033331133ee33003333133ee33033333e1331333330e333303311331333331331133133ee331330e33ee10ee330331033133e331333333133113303310333313333313333331333331333333133333e13310e33303333e1e3333e1e3333133ee331eeeee11ee100eee1eeee110eeee110eeee1ee11ee1011111001100011101111000111100011110110011"
     self.log={
@@ -32,14 +27,20 @@ function console:enter(prev,cart)
         "\16ShrimpCat",
         ""
     }
-    self.input=""
     self.bg=0
-    self.egg={
-        cat={x=-8,y=sys.sh-8,go=false,img="0000000000050050005655650557777557570705577877855777775056777650"}
-    }
+    self.loaded=""
+end
+
+function console:enter(prev,cart)
+    timer.clear()
+    if mem then
+        self.backup=mem.ram
+    end
+    
+    self.input=""
+    
     self.scroll={y=0,gy=0,mouse=false}
     self.time=0
-    self.loaded=""
 end
 
 local blink={" ","\8_"}
@@ -64,15 +65,6 @@ function console:update(dt)
         end
 
         api.print("> "..self.input..blink[math.floor((self.time/8)%#blink)+1],ox,ind*size+oy+self.scroll.y,3)
-            
-        --api.print("hello world",0,0,7)
-        if self.egg.cat.go then
-            self.egg.cat.x=self.egg.cat.x+1
-            api.drawData(self.egg.cat,self.egg.cat.x,self.egg.cat.y,8,8)
-            if self.egg.cat.x>sys.sw then
-                self.egg.cat.go=false
-            end
-        end
 
         --145
 
@@ -249,7 +241,10 @@ console.commands={
         end
     end,
     ["run"]=function(args)
-        gs.switch(state.run,tempCart)
+        if console.loaded~="" then
+            local load=require("load")
+            load.load(console.loaded)
+        end
     end
 }
 

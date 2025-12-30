@@ -70,7 +70,7 @@ function love.load()
     vram=love.image.newImageData(sys.sw,sys.sh)
     sound:init()
 
-    gs.switch(state.console,c)
+    gs.switch(state.console)
 end
 
 function love.update(dt)
