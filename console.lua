@@ -246,11 +246,26 @@ console.commands={
     ["exit"]=function()
         love.event.quit()
     end,
-    ["demos"]=function()
+    ["demos"]=function(args)
         ok = love.filesystem.createDirectory("carts/demos")
         love.filesystem.write("carts/demos/".."hello"..data.extension,require("demos/helloworld"))
         out("\11demos installed!")
-    end
+        out("\1Demos:")
+        out("\2hello")
+        out("\1use \14load demos/cartname")
+        out("\1to load a demo cart")
+    end,
+    ["credits"]=function()
+        out("\2Font:")
+        out("Kitchen Sink")
+        out("By \16Polyducks")
+        out("\1------")
+        out("\2Special thanks:")
+        out("\6Hack Club")
+        out("\14SkullDragger")
+        out("\11RazerTG")
+        out("And all my other frens")
+    end,
 }
 
 function out(s)
