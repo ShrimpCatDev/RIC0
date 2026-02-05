@@ -7,6 +7,7 @@ function run:enter(prev,cart)
 end
 
 function run:update(dt)
+    api.updateInput()
     cpu:tick(dt,function()
         font.time=font.time+1
         sandbox:tick()

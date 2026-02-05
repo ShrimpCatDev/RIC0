@@ -47,6 +47,18 @@ end
 ]==]
 
 function love.load()
+    baton=require "lib.baton"
+    input=baton.new{
+        controls={
+            up={"key:up"},
+            down={"key:down"},
+            left={"key:left"},
+            right={"key:right"},
+            a={"key:z"},
+            b={"key:x"}
+        },
+        joystick=love.joystick.getJoysticks()[1]
+    }
     love.mouse.setVisible(false)
     love.window.setTitle("BitSoda")
     gs=require("lib/hump/gamestate")
@@ -74,7 +86,7 @@ function love.load()
 end
 
 function love.update(dt)
-    
+    input:update()
 end
 
 function love.draw()

@@ -17,7 +17,10 @@ function sandbox:init()
         sset=api.sset,
         sget=api.sget,
         sspr=api.sspr,
-        spr=api.spr
+        spr=api.spr,
+
+        btn=api.btn,
+        btnp=api.btnp
     }
 end
 

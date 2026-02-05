@@ -1,5 +1,41 @@
 local api={}
 
+function api.updateInput()
+    input:update()
+    api.inputDown={
+        input:down("up"),
+        input:down("down"),
+        input:down("left"),
+        input:down("right"),
+        input:down("a"),
+        input:down("b")
+    }
+    api.inputPressed={
+        input:pressed("up"),
+        input:pressed("down"),
+        input:pressed("left"),
+        input:pressed("right"),
+        input:pressed("a"),
+        input:pressed("b")
+    }
+end
+
+function api.btn(ind)
+    if ind<#api.inputDown and ind>=0 then
+        return api.inputDown[ind+1]
+    else
+        return false
+    end
+end
+
+function api.btnp(ind)
+    if ind<#api.inputPressed and ind>=0 then
+        return api.inputPressed[ind+1]
+    else
+        return false
+    end
+end
+
 function comp(val1,val2)
     return bit.bor(val1,bit.lshift(val2,4))
 end

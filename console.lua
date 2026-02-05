@@ -245,6 +245,11 @@ console.commands={
     end,
     ["exit"]=function()
         love.event.quit()
+    end,
+    ["demos"]=function()
+        ok = love.filesystem.createDirectory("carts/demos")
+        love.filesystem.write("carts/demos/".."hello"..data.extension,require("demos/helloworld"))
+        out("\11demos installed!")
     end
 }
 
