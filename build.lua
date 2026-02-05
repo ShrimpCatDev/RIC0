@@ -4,6 +4,6 @@ return {
       version = '0.1',
       love = '11.5',
       icon = 'icon.png',
-      platforms = {'windows','linux','mac'},
+      platforms = {'windows','linux','macos'},
       ignore = {}
 }
