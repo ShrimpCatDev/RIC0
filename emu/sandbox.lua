@@ -12,6 +12,7 @@ function sandbox:init()
         pget=api.pget,
         cls=api.cls,
         rectfill=api.rectfill,
+        rect=api.rect,
         print=api.print,
         math=math,
         sset=api.sset,

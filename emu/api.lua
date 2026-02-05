@@ -126,6 +126,17 @@ function api.rectfill(x1,y1,w,h,c)
     end
 end
 
+function api.rect(x,y,w,h,c)
+    for i=x,x+w-1 do
+        api.pset(i,y,c)
+        api.pset(i,y+h-1,c)
+    end
+    for j=y,y+h-1 do
+        api.pset(x,j,c)
+        api.pset(x+w-1,j,c)
+    end
+end
+
 function api.time()
     return cpu.time
 end
